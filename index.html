@@ -151,7 +151,7 @@
         <img src="logo.png" alt="Logo de la Agencia">
         <h1>Asistente Virtual de la Agencia</h1>
         <h2>Esta herramienta te permite encontrar información sobre documentos relacionados con la actividad de la agencia.</h2>
-        <button id="openModal">Consejos</button>
+        <button id="openModal">Ejemplos</button>
         <div class="notice">
             <p><strong>⚠ Aviso:</strong> Actualmente, el asistente solo puede proporcionar información sobre Protesta Social. Estamos trabajando para expandir su funcionalidad. ¡Gracias por tu paciencia! 😊</p>
         </div>
@@ -170,8 +170,34 @@
         </div>
     </div>
 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ejemplos de Preguntas</h2>
+            <p>¿Qué dice la Constitución de Colombia sobre la protesta social?</p>
+            <p>¿Cuáles son las dimensiones protegidas de la protesta social?</p>
+            <p>¿Qué tipos de protesta social pacífica existen?</p>
+            <p>¿Cuáles son las diferencias entre actos violentos y actos disruptivos en una protesta?</p>
+        </div>
+    </div>
+
     <script>
         const API_URL = "https://agencia-o2w9.onrender.com/chat"; 
+
+        document.getElementById("openModal").addEventListener("click", function() {
+            document.getElementById("myModal").style.display = "block";
+        });
+
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("myModal").style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            let modal = document.getElementById("myModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
 
         document.getElementById("send-button").addEventListener("click", async function() {
             const userInput = document.getElementById("user-input").value;
@@ -191,22 +217,9 @@
 
             document.getElementById("loading").style.display = "none";
             document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
-
-            // Mensajes adicionales después de la respuesta
-            setTimeout(() => {
-                const mensajes = [
-                    "Si necesita más información, estaré encantado de ayudar.",
-                    "Por favor, no dude en consultarme si requiere más detalles.",
-                    "Estoy aquí para asistirle con cualquier otra consulta.",
-                    "Si necesita mayor precisión, puedo proporcionarle más detalles."
-                ];
-                const mensajeAleatorio = mensajes[Math.floor(Math.random() * mensajes.length)];
-                document.getElementById("chat-box").innerHTML += `<p class="assistant-message">${mensajeAleatorio}</p>`;
-            }, 500);
         });
     </script>
 </body>
 </html>
-
 
 
