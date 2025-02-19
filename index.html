@@ -93,6 +93,25 @@
             cursor: pointer;
             margin-left: 5px;
         }
+        /* Precargador */
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #loading img {
+            width: 50px;
+            animation: colorChange 1.5s infinite alternate;
+        }
+        #loading p {
+            color: #002D5A; /* Azul oficial de la Agencia */
+            font-weight: bold;
+        }
+        /* Animación de cambio de color del logo */
+        @keyframes colorChange {
+            0% { filter: brightness(1) saturate(1) hue-rotate(0deg); } /* Amarillo */
+            100% { filter: brightness(1) saturate(1) hue-rotate(180deg); } /* Azul */
+        }
         /* Estilos para la ventana emergente */
         .modal {
             display: none;
@@ -132,6 +151,10 @@
             <p><strong>⚠ Aviso:</strong> Actualmente, el asistente solo puede proporcionar información sobre Protesta Social. Estamos trabajando para expandir su funcionalidad. ¡Gracias por tu paciencia! 😊</p>
         </div>
         <div id="chat-container">
+            <div id="loading">
+                <img src="logo.png" alt="Cargando...">
+                <p>Procesando su solicitud...</p>
+            </div>
             <div id="chat-box"></div>
             <div id="chat-controls">
                 <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí...">
@@ -156,13 +179,13 @@
     </div>
 
     <script>
-        // URL del backend
         const API_URL = "https://agencia-o2w9.onrender.com/chat"; 
 
-        // Botón de envío de mensaje
         document.getElementById("send-button").addEventListener("click", async function() {
             const userInput = document.getElementById("user-input").value;
             if (!userInput) return;
+
+            document.getElementById("loading").style.display = "block";
 
             const response = await fetch(API_URL, {
                 method: "POST",
@@ -173,26 +196,20 @@
             });
 
             const data = await response.json();
+
+            document.getElementById("loading").style.display = "none";
+
             document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
         });
 
-        // Funcionalidad del botón "Consejos"
         document.getElementById("openModal").addEventListener("click", function() {
-            let modal = document.getElementById("myModal");
-            if (modal) {
-                modal.style.display = "block";
-            }
+            document.getElementById("myModal").style.display = "block";
         });
 
-        // Asegurar que el botón de cerrar funcione sin errores
-        let closeButton = document.querySelector(".close");
-        if (closeButton) {
-            closeButton.addEventListener("click", function() {
-                document.getElementById("myModal").style.display = "none";
-            });
-        }
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("myModal").style.display = "none";
+        });
 
-        // Permitir cerrar el modal haciendo clic fuera de él
         window.addEventListener("click", function(event) {
             let modal = document.getElementById("myModal");
             if (event.target === modal) {
