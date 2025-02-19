@@ -176,28 +176,38 @@
         // Cambio realizado: URL del backend ajustada a la nueva dirección
         const API_URL = "https://agencia-o2w9.onrender.com/chat"; 
 
-        document.getElementById("send-button").addEventListener("click", async function() {
-            const userInput = document.getElementById("user-input").value;
-            if (!userInput) return;
+ document.getElementById("send-button").addEventListener("click", function() {
+    handleChat();
+});
 
-            // Mostrar precargador
-            document.getElementById("loading").style.display = "block";
+async function handleChat() {
+    const userInput = document.getElementById("user-input").value;
+    if (!userInput) return;
 
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: userInput })
-            });
+    // Mostrar precargador
+    document.getElementById("loading").style.display = "block";
 
-            const data = await response.json();
-
-            // Ocultar precargador cuando llegue la respuesta
-            document.getElementById("loading").style.display = "none";
-
-            document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: userInput })
         });
+
+        const data = await response.json();
+
+        // Ocultar precargador cuando llegue la respuesta
+        document.getElementById("loading").style.display = "none";
+
+        document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+    } catch (error) {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("chat-box").innerHTML += `<p><strong>Error:</strong> No se pudo procesar la solicitud.</p>`;
+    }
+}
+
     </script>
 </body>
 </html>
