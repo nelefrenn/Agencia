@@ -76,6 +76,11 @@
             flex-grow: 1;
             color: #002D5A;
         }
+        .assistant-message {
+            color: #002D5A;
+            font-style: italic;
+            margin-top: 5px;
+        }
         #chat-controls {
             display: flex;
             justify-content: space-between;
@@ -164,7 +169,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -173,8 +178,6 @@
             <p>¿Cuáles son las dimensiones protegidas de la protesta social?</p>
             <p>¿Qué tipos de protesta social pacífica existen?</p>
             <p>¿Cuáles son las diferencias entre actos violentos y actos disruptivos en una protesta?</p>
-            <p>¿Cuáles son ejemplos de uso ilegítimo de la fuerza en protestas?</p>
-            <p>¿Qué tipos de armas menos letales pueden usar las fuerzas del orden en protestas?</p>
         </div>
     </div>
 
@@ -198,25 +201,20 @@
             const data = await response.json();
 
             document.getElementById("loading").style.display = "none";
-
             document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
-        });
 
-        document.getElementById("openModal").addEventListener("click", function() {
-            document.getElementById("myModal").style.display = "block";
-        });
-
-        document.querySelector(".close").addEventListener("click", function() {
-            document.getElementById("myModal").style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            let modal = document.getElementById("myModal");
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
+            // Mensajes adicionales
+            const mensajes = [
+                "Si necesita más información, estaré encantado de ayudar.",
+                "Por favor, no dude en consultarme si requiere más detalles.",
+                "Estoy aquí para asistirle con cualquier otra consulta.",
+                "Si necesita mayor precisión, puedo proporcionarle más detalles."
+            ];
+            const mensajeAleatorio = mensajes[Math.floor(Math.random() * mensajes.length)];
+            document.getElementById("chat-box").innerHTML += `<p class="assistant-message">${mensajeAleatorio}</p>`;
         });
     </script>
 </body>
 </html>
+
 
