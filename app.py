@@ -23,10 +23,10 @@ app = FastAPI()
 # Habilitar CORS para permitir solicitudes desde el frontend específico
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://nelefrenn.github.io"],  # Permitir solo el frontend
+    allow_origins=["https://nelefrenn.github.io", "https://agencia-o2w9.onrender.com"],  # Agregado nuevo dominio
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],  # Métodos permitidos
-    allow_headers=["Content-Type", "Authorization"],  # Permitir solo encabezados necesarios
+    allow_methods=["*"],  # Permitir todos los métodos
+    allow_headers=["*"],  # Permitir todos los encabezados
 )
 
 # Ruta raíz para comprobar que el backend funciona
