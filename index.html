@@ -217,9 +217,20 @@
 
             document.getElementById("loading").style.display = "none";
             document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+
+            setTimeout(() => {
+                const mensajes = [
+                    "Si necesita más información, estaré encantado de ayudar.",
+                    "No dude en consultarme si requiere más detalles.",
+                    "Estoy aquí para asistirle con cualquier otra consulta.",
+                    "Si necesita mayor precisión, puedo proporcionarle más detalles."
+                ];
+                document.getElementById("chat-box").innerHTML += `<p class="assistant-message">${mensajes[Math.floor(Math.random() * mensajes.length)]}</p>`;
+            }, 500);
         });
     </script>
 </body>
 </html>
+
 
 
