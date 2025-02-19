@@ -153,12 +153,33 @@
         </div>
     </div>
     <script>
+        // Cambio realizado: URL del backend ajustada a la nueva dirección
+        const API_URL = "https://agencia-o2w9.onrender.com/chat"; // Nueva URL ajustada
+
+        document.getElementById("send-button").addEventListener("click", async function() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+
+            const data = await response.json();
+            document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+        });
+
         document.getElementById("openModal").addEventListener("click", function() {
             document.getElementById("myModal").style.display = "block";
         });
+
         document.querySelector(".close").addEventListener("click", function() {
             document.getElementById("myModal").style.display = "none";
         });
     </script>
 </body>
 </html>
+
