@@ -181,7 +181,7 @@
         </div>
     </div>
 
-    <script>
+        <script>
         const API_URL = "https://agencia-o2w9.onrender.com/chat"; 
 
         document.getElementById("openModal").addEventListener("click", function() {
@@ -218,6 +218,7 @@
             document.getElementById("loading").style.display = "none";
             document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
 
+            // Se asegura que la frase aleatoria se agregue después de la respuesta
             setTimeout(() => {
                 const mensajes = [
                     "Si necesita más información, estaré encantado de ayudar.",
@@ -225,10 +226,18 @@
                     "Estoy aquí para asistirle con cualquier otra consulta.",
                     "Si necesita mayor precisión, puedo proporcionarle más detalles."
                 ];
-                document.getElementById("chat-box").innerHTML += `<p class="assistant-message">${mensajes[Math.floor(Math.random() * mensajes.length)]}</p>`;
+                const mensajeAleatorio = mensajes[Math.floor(Math.random() * mensajes.length)];
+                
+                // Se asegura de que la frase se agregue correctamente
+                const chatBox = document.getElementById("chat-box");
+                const newMessage = document.createElement("p");
+                newMessage.className = "assistant-message";
+                newMessage.innerText = mensajeAleatorio;
+                chatBox.appendChild(newMessage);
             }, 500);
         });
     </script>
+
 </body>
 </html>
 
