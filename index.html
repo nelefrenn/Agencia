@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual de la Agencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #002D5A;
+            margin: 0;
+            padding: 0;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 40px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #002D5A;
+            font-size: 32px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        h2 {
+            font-size: 22px;
+            color: #333;
+            text-align: center;
+            margin: 10px 0 20px;
+        }
+        .notice {
+            background: #FFD700;
+            color: #002D5A;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        #chat-container {
+            margin-top: 30px;
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 10px;
+            background: #F5F5F5;
+            width: 100%;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+        #chat-box {
+            width: 100%;
+            height: 250px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 10px;
+            text-align: left;
+            flex-grow: 1;
+        }
+        #chat-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        #user-input {
+            width: 75%;
+            padding: 10px;
+        }
+        #send-button, #copy-button, #clear-button {
+            padding: 10px;
+            background: #002D5A;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        /* Estilos para la ventana emergente */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 10px;
+            text-align: left;
+            color: #002D5A;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="Logo de la Agencia">
+        <h1>Asistente Virtual de la Agencia</h1>
+        <h2>Esta herramienta te permite encontrar información sobre documentos relacionados con la actividad de la agencia.</h2>
+        <button id="openModal">Consejos</button>
+        <div class="notice">
+            <p><strong>⚠ Aviso:</strong> Actualmente, el asistente solo puede proporcionar información sobre Protesta Social. Estamos trabajando para expandir su funcionalidad. ¡Gracias por tu paciencia! 😊</p>
+        </div>
+        <div id="chat-container">
+            <div id="chat-box"></div>
+            <div id="chat-controls">
+                <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí...">
+                <button id="send-button">Enviar</button>
+                <button id="copy-button">Copiar</button>
+                <button id="clear-button">Borrar</button>
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ejemplos de Preguntas</h2>
+            <p>¿Qué dice la Constitución de Colombia sobre la protesta social?</p>
+            <p>¿Cuáles son las dimensiones protegidas de la protesta social?</p>
+            <p>¿Qué tipos de protesta social pacífica existen?</p>
+            <p>¿Cuáles son las diferencias entre actos violentos y actos disruptivos en una protesta?</p>
+            <p>¿Cuáles son ejemplos de uso ilegítimo de la fuerza en protestas?</p>
+            <p>¿Qué tipos de armas menos letales pueden usar las fuerzas del orden en protestas?</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("openModal").addEventListener("click", function() {
+            document.getElementById("myModal").style.display = "block";
+        });
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("myModal").style.display = "none";
+        });
+    </script>
+</body>
+</html>
