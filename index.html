@@ -64,6 +64,11 @@
             min-height: 350px;
             display: flex;
             flex-direction: column;
+   <div id="loading">
+    <img src="logo.png" alt="Cargando...">
+    <p>Procesando su solicitud...</p>
+   </div>
+
         }
         #chat-box {
             width: 100%;
@@ -120,6 +125,24 @@
             font-weight: bold;
             cursor: pointer;
         }
+    /* Precargador */
+#loading {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#loading img {
+    width: 50px;
+    animation: colorChange 1.5s infinite alternate;
+}
+
+/* Animación de cambio de color del logo */
+@keyframes colorChange {
+    0% { filter: brightness(1) saturate(1) hue-rotate(0deg); } /* Amarillo */
+    100% { filter: brightness(1) saturate(1) hue-rotate(180deg); } /* Azul */
+}
+    
     </style>
 </head>
 <body>
@@ -157,21 +180,38 @@
         // Cambio realizado: URL del backend ajustada a la nueva dirección
         const API_URL = "https://agencia-o2w9.onrender.com/chat"; // Nueva URL ajustada
 
-        document.getElementById("send-button").addEventListener("click", async function() {
-            const userInput = document.getElementById("user-input").value;
-            if (!userInput) return;
+    document.getElementById("send-button").addEventListener("click", async function() {
+    const userInput = document.getElementById("user-input").value;
+    if (!userInput) return;
 
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: userInput })
-            });
+    // Mostrar precargador
+    document.getElementById("loading").style.display = "block";
 
-            const data = await response.json();
-            document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
-        });
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userInput })
+    });
+
+    const data = await response.json();
+
+    // Ocultar precargador cuando llegue la respuesta
+    document.getElementById("loading").style.display = "none";
+
+    document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+});
+
+
+    const data = await response.json();
+
+    // Ocultar precargador cuando llegue la respuesta
+    document.getElementById("loading").style.display = "none";
+
+    document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
+});
+
 
         document.getElementById("openModal").addEventListener("click", function() {
             document.getElementById("myModal").style.display = "block";
