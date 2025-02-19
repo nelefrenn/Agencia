@@ -64,11 +64,6 @@
             min-height: 350px;
             display: flex;
             flex-direction: column;
-   <div id="loading">
-    <img src="logo.png" alt="Cargando...">
-    <p>Procesando su solicitud...</p>
-   </div>
-
         }
         #chat-box {
             width: 100%;
@@ -98,6 +93,21 @@
             cursor: pointer;
             margin-left: 5px;
         }
+        /* Precargador */
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #loading img {
+            width: 50px;
+            animation: colorChange 1.5s infinite alternate;
+        }
+        /* Animación de cambio de color del logo */
+        @keyframes colorChange {
+            0% { filter: brightness(1) saturate(1) hue-rotate(0deg); } /* Amarillo */
+            100% { filter: brightness(1) saturate(1) hue-rotate(180deg); } /* Azul */
+        }
         /* Estilos para la ventana emergente */
         .modal {
             display: none;
@@ -125,24 +135,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-    /* Precargador */
-#loading {
-    display: none;
-    text-align: center;
-    margin-top: 10px;
-}
-
-#loading img {
-    width: 50px;
-    animation: colorChange 1.5s infinite alternate;
-}
-
-/* Animación de cambio de color del logo */
-@keyframes colorChange {
-    0% { filter: brightness(1) saturate(1) hue-rotate(0deg); } /* Amarillo */
-    100% { filter: brightness(1) saturate(1) hue-rotate(180deg); } /* Azul */
-}
-    
     </style>
 </head>
 <body>
@@ -155,6 +147,10 @@
             <p><strong>⚠ Aviso:</strong> Actualmente, el asistente solo puede proporcionar información sobre Protesta Social. Estamos trabajando para expandir su funcionalidad. ¡Gracias por tu paciencia! 😊</p>
         </div>
         <div id="chat-container">
+            <div id="loading">
+                <img src="logo.png" alt="Cargando...">
+                <p>Procesando su solicitud...</p>
+            </div>
             <div id="chat-box"></div>
             <div id="chat-controls">
                 <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí...">
@@ -178,47 +174,29 @@
     </div>
     <script>
         // Cambio realizado: URL del backend ajustada a la nueva dirección
-        const API_URL = "https://agencia-o2w9.onrender.com/chat"; // Nueva URL ajustada
+        const API_URL = "https://agencia-o2w9.onrender.com/chat"; 
 
-    document.getElementById("send-button").addEventListener("click", async function() {
-    const userInput = document.getElementById("user-input").value;
-    if (!userInput) return;
+        document.getElementById("send-button").addEventListener("click", async function() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
 
-    // Mostrar precargador
-    document.getElementById("loading").style.display = "block";
+            // Mostrar precargador
+            document.getElementById("loading").style.display = "block";
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: userInput })
-    });
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userInput })
+            });
 
-    const data = await response.json();
+            const data = await response.json();
 
-    // Ocultar precargador cuando llegue la respuesta
-    document.getElementById("loading").style.display = "none";
+            // Ocultar precargador cuando llegue la respuesta
+            document.getElementById("loading").style.display = "none";
 
-    document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
-});
-
-
-    const data = await response.json();
-
-    // Ocultar precargador cuando llegue la respuesta
-    document.getElementById("loading").style.display = "none";
-
-    document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
-});
-
-
-        document.getElementById("openModal").addEventListener("click", function() {
-            document.getElementById("myModal").style.display = "block";
-        });
-
-        document.querySelector(".close").addEventListener("click", function() {
-            document.getElementById("myModal").style.display = "none";
+            document.getElementById("chat-box").innerHTML += `<p><strong>Asistente:</strong> ${data.reply}</p>`;
         });
     </script>
 </body>
